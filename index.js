@@ -30,6 +30,7 @@ const client = new MongoClient(uri, {
   };
   dbConnect();
   const allJobCollection = client.db("jobsphere").collection("alljobs");
+  const appliedJobCollection = client.db("jobsphere").collection("appliedjobs");
   app.get("/alljobs", async (req, res) => {
     const cursor = allJobCollection.find();
     const result = await cursor.toArray();
@@ -42,7 +43,13 @@ app.post("/addjob", async (req, res) => {
   const result = await allJobCollection.insertOne(newjob);
   res.send(result);
 });
-
+ ///applying job api
+ app.post("/applyjob", async (req, res) => {
+  const newjobtoApply = req.body;
+  console.log(newjobtoApply);
+  const result = await appliedJobCollection.insertOne(newjobtoApply);
+  res.send(result);
+});
 ///job details api
 app.get("/specificjob/:id", async (req, res) => {
   const id = req.params.id;

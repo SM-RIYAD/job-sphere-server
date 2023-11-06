@@ -76,6 +76,77 @@ app.get('/myjobs',async (req, res) => {
   res.send(result);
 })
 
+///update a job api
+app.put("/updatejob/:id", async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) };
+  const options = { upsert: true };
+  const newjobtoUpdate = req.body;
+  console.log("from body update", newjobtoUpdate );
+  const newjob = {
+    // name: updatedProduct.name,
+    // brand: updatedProduct.brand,
+    // date: updatedProduct.date,
+    // price: updatedProduct.price,
+    // rating: updatedProduct.rating,
+    // description: updatedProduct.description,
+    // type: updatedProduct.type,
+    // photo: updatedProduct.photo,
+
+    companyLogo:newjobtoUpdate.companyLogo,
+        
+    jobPhoto:newjobtoUpdate.jobPhoto,
+
+    JobTitle:newjobtoUpdate.JobTitle,
+
+    UserName:newjobtoUpdate.UserName,
+    Location:newjobtoUpdate.Location,
+    useremail:newjobtoUpdate.useremail,
+
+    JobCategory:newjobtoUpdate.JobCategory,
+    CompanyName:newjobtoUpdate.CompanyName,
+    SalaryRange:newjobtoUpdate.SalaryRange,
+
+    JobDescription:newjobtoUpdate. JobDescription,
+
+    JobPostingDate:newjobtoUpdate.JobPostingDate,
+
+    ApplicationDeadline:newjobtoUpdate. ApplicationDeadline,
+
+    JobApplicantsNumber:newjobtoUpdate.JobApplicantsNumber,
+  };
+  console.log("new job",  newjob);
+  const job = {
+    $set: {
+      companyLogo:newjobtoUpdate.companyLogo,
+        
+      jobPhoto:newjobtoUpdate.jobPhoto,
+  
+      JobTitle:newjobtoUpdate.JobTitle,
+  
+      UserName:newjobtoUpdate.UserName,
+      Location:newjobtoUpdate.Location,
+      useremail:newjobtoUpdate.useremail,
+  
+      JobCategory:newjobtoUpdate.JobCategory,
+      CompanyName:newjobtoUpdate.CompanyName,
+      SalaryRange:newjobtoUpdate.SalaryRange,
+  
+      JobDescription:newjobtoUpdate. JobDescription,
+  
+      JobPostingDate:newjobtoUpdate.JobPostingDate,
+  
+      ApplicationDeadline:newjobtoUpdate. ApplicationDeadline,
+  
+      JobApplicantsNumber:newjobtoUpdate.JobApplicantsNumber,
+    },
+  };
+
+  const result = await allJobCollection.updateOne(filter, job, options);
+  console.log("updated obj", result);
+  res.send(result);
+});
+
 
 
 

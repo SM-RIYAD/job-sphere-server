@@ -54,12 +54,30 @@ app.post("/addjob", async (req, res) => {
 app.get("/specificjob/:id", async (req, res) => {
   const id = req.params.id;
 
-  console.log(" update id: ", id);
+  // console.log(" update id: ", id);
   const query = { _id: new ObjectId(id) };
   const result = await allJobCollection.findOne(query);
   console.log("to see details job", result);
   res.send(result);
 });
+
+/// update applicants number api
+
+app.get('/updateapplicantnumber/:id', async (req, res) => {
+  const id = req.params.id;
+  const filter = { _id: new ObjectId(id) };
+  // const jobdata = req.body;
+  // console.log(jobdata);
+  const updatedjobdata = {
+      $inc: {
+          // status: updatedBooking.status
+          JobApplicantsNumber: 1
+      },
+  };
+  const result = await allJobCollection.updateOne(filter, updatedjobdata);
+  console.log( "result from update", result )
+  res.send(result);
+})
 app.get("/", (req, res) => {
     res.send("job sphere server is running");
   });

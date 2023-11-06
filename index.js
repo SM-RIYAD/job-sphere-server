@@ -29,6 +29,30 @@ const client = new MongoClient(uri, {
     }
   };
   dbConnect();
+  const allJobCollection = client.db("jobsphere").collection("alljobs");
+  app.get("/alljobs", async (req, res) => {
+    const cursor = allJobCollection.find();
+    const result = await cursor.toArray();
+    res.send(result);
+  });
+  ///adding job api
+app.post("/addjob", async (req, res) => {
+  const newjob = req.body;
+  console.log(newjob);
+  const result = await allJobCollection.insertOne(newjob);
+  res.send(result);
+});
+
+///job details api
+app.get("/specificjob/:id", async (req, res) => {
+  const id = req.params.id;
+
+  console.log(" update id: ", id);
+  const query = { _id: new ObjectId(id) };
+  const result = await allJobCollection.findOne(query);
+  console.log("to see details job", result);
+  res.send(result);
+});
 app.get("/", (req, res) => {
     res.send("job sphere server is running");
   });

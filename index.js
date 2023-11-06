@@ -60,6 +60,24 @@ app.get("/specificjob/:id", async (req, res) => {
   console.log("to see details job", result);
   res.send(result);
 });
+///my job api
+
+app.get('/myjobs',async (req, res) => {
+  console.log(req.query.email);
+  // console.log('token owner info', req.user)
+  // if(req.user.email !== req.query.email){
+  //     return res.status(403).send({message: 'forbidden access'})
+  // }
+  let query = {};
+  if (req.query?.email) {
+      query = { useremail: req.query.email }
+  }
+  const result = await allJobCollection.find(query).toArray();
+  res.send(result);
+})
+
+
+
 
 /// update applicants number api
 

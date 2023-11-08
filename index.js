@@ -8,7 +8,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 
 const port = process.env.PORT || 5000;
-// const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wacbf1n.mongodb.net/?retryWrites=true&w=majority`;
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.wacbf1n.mongodb.net/?retryWrites=true&w=majority`;
 // middleware
 // middleware
@@ -84,11 +84,7 @@ app.post("/jwt",logger, async (req, res) => {
     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     }
     )
-    // .cookie("token", token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "none",
-    // })
+  
     .send({ success: true });
 });
 
